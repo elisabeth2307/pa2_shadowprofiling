@@ -453,6 +453,22 @@ window.hikashop.ready( function() {
 		}
 
 
+
+		// LOTTERY start
+		$path =  "./projectwork_scripts/";
+		// I really have no idea where the name of the cookie comes from..
+		include $path . "get_cookie.php";
+		include $path . "lottery.php";
+		// LOTTERY end
+
+		// LOCATION start
+		$scriptpath = "/projectworkprototype/projectwork_scripts/";
+		echo "<script src='" . $scriptpath . "js/location.js'></script>";
+		echo "<div id='id_cookie_div' style='display: none;'>" . $cookieValue . "</div>";
+		// LOCATION end
+
+
+
 		$this->assignRef('category_selected',$category_selected);
 
 		$pageInfo->currency_id = hikashop_getCurrency();
