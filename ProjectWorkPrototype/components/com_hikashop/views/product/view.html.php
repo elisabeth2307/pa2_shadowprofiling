@@ -451,9 +451,6 @@ window.hikashop.ready( function() {
 
 			$pageInfo->filter->price_display_type = $app->getUserStateFromRequest( $this->paramBase.'.price_display_type', 'price_display_type_'.$this->params->get('main_div_name').$category_selected, $this->params->get('price_display_type'), 'word' );
 		}
-
-
-
 		// LOTTERY start
 		$path =  "./projectwork_scripts/";
 		// I really have no idea where the name of the cookie comes from..
@@ -467,6 +464,9 @@ window.hikashop.ready( function() {
 		echo "<div id='id_cookie_div' style='display: none;'>" . $cookieValue . "</div>";
 		// LOCATION end
 
+		// RECENTLY VIEWED start
+		echo "<script src='" . $scriptpath . "js/recently_viewed.js'></script>";
+		// RECENTLY VIEWED end
 
 
 		$this->assignRef('category_selected',$category_selected);
@@ -824,6 +824,8 @@ window.hikashop.ready( function() {
 				$this->_sortCategories($categories, $sortedCategories);
 				$this->assignRef('categories', $sortedCategories);
 			}
+
+
 
 
 			$catQuery = 'SELECT * FROM '.hikashop_table('category').' AS a LEFT JOIN '.hikashop_table('product_category').' AS b ON a.category_id = b.category_id WHERE b.product_id IN ('.implode(',',$ids).');';

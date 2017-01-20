@@ -48,6 +48,7 @@ if(file_exists($filename)){
 				?></td>
 				<td><?php
 					$onWhat='onchange'; if($oneExtraField->field_type=='radio') $onWhat='onclick';
+
 					echo $this->fieldsClass->display(
 						$oneExtraField,
 						@$this->address->$fieldName,

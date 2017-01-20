@@ -1,4 +1,5 @@
 function takePart() {
+
    var email = document.getElementById("email").value;
    var id = document.getElementById("id_cookie").value;
 

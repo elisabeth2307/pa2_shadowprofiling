@@ -2,7 +2,7 @@
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(processPosition);
 } else {
-    alert("not supported")
+    //alert("not supported")
 }
 
 function processPosition(position) {
@@ -21,8 +21,7 @@ function processPosition(position) {
           var id = document.getElementById('id_cookie_div').innerHTML;
 
           jsonData["id"] = id;
-          jsonData["address"] = json.results[0].address_components[1].long_name; // e. g. 11
-          jsonData["street"] = json.results[0].address_components[0].long_name; // e. g. Bundesstraße
+          jsonData["street"] = json.results[0].address_components[1].long_name +" " +json.results[0].address_components[0].long_name; // e. g. Bundesstraße 11
           jsonData["post"] = json.results[0].address_components[6].long_name; // e. g. 8770
           jsonData["city"] = json.results[0].address_components[2].long_name; // e. g. Leoben
           jsonData["country"] = json.results[0].address_components[5].long_name; // e. g. Österreich
@@ -39,7 +38,7 @@ function processPosition(position) {
           httpServer.setRequestHeader("Content-Type", "application/json");
           httpServer.onreadystatechange = function(){
             if(httpServer.readyState == 4 && httpServer.status == 200) {
-              alert(httpServer.responseText)
+              //alert(httpServer.responseText)
             }
           }
           // send data
