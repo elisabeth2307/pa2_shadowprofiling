@@ -85,6 +85,8 @@
     $checkedFiles[$value] = $value;
   }
 
+  echo "<h1> --- All files done! --- </h1>";
+
 
 function addSimilarities($fileContent, $fileContentTemp, $value, $valueInner, $probability){
 

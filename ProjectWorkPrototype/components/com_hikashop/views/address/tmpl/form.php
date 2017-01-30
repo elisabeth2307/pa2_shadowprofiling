@@ -14,9 +14,8 @@ defined('_JEXEC') or die('Restricted access');
 <?php
 
 // START Prototype
-$pathScripts = "./projectwork_scripts/";
-$pathProfiles = "./profiles/";
-include $pathScripts . "get_cookie.php";
+include "./prototype_variables.php";
+include $pathPHPfiles . "get_cookie.php";
 // cookie value is now available -> $cookieValue
 
 // file handling
