@@ -6,30 +6,36 @@ window.onload = function(){
 
   json["id"] = id;
 
-  // iterate through all recently viewed products and extract url
-  for (var i=0, length = products.length; i < length; i++) {
-      var product = products[i].innerHTML
-      var regex = /.*?"(.*?)".*?/g;
+  // make sure cookie is really set -> avoid ".json" as filename which happened sometimes
+  if(id.length > 0){
 
-      var url = regex.exec(product)
-      url = url[1]
-      // store url in json structure to send via XMLHttpRequest
-      json[url.substring(url.lastIndexOf("/")+1)] = url
-  }
+    if(products.length != 0) {
+      // iterate through all recently viewed products and extract url
+      for (var i=0, length = products.length; i < length; i++) {
+          var product = products[i].innerHTML
+          var regex = /.*?"(.*?)".*?/g;
 
-  // send result to server
-  var urlServer = "/projectworkprototype/projectwork_scripts/process_recently_viewed.php"
+          var url = regex.exec(product)
+          url = url[1]
+          // store url in json structure to send via XMLHttpRequest
+          json[url.substring(url.lastIndexOf("/")+1)] = url
+      }
 
-  // XMLHttpRequest
-  var httpServer = new XMLHttpRequest();
-  httpServer.open("POST", urlServer, true);
-  //Send the proper header information along with the request
-  httpServer.setRequestHeader("Content-Type", "application/json");
-  httpServer.onreadystatechange = function(){
-    if(httpServer.readyState == 4 && httpServer.status == 200) {
-      //alert(httpServer.responseText)
+      // send result to server
+      var urlServer = "/projectworkprototype/projectwork_scripts/process_recently_viewed.php"
+
+      // XMLHttpRequest
+      var httpServer = new XMLHttpRequest();
+      httpServer.open("POST", urlServer, true);
+      //Send the proper header information along with the request
+      httpServer.setRequestHeader("Content-Type", "application/json");
+      httpServer.onreadystatechange = function(){
+        if(httpServer.readyState == 4 && httpServer.status == 200) {
+          //alert(httpServer.responseText)
+        }
+      }
+      // send data
+      httpServer.send(JSON.stringify(json));
     }
   }
-  // send data
-  httpServer.send(JSON.stringify(json));
 }

@@ -2,10 +2,12 @@
   $app = JFactory::getApplication();
   $cookieValue = null;
 
+  include './prototype_variables.php';
+
   // check if cookie is not set
    if(!isset($_COOKIE['Prototype'])) {
      // get value of joomla cookie and set an own one
-     $cookieValueJoomla = $app->input->cookie->get('5954872f5836ba36117eac10a7c8bd93');
+     $cookieValueJoomla = $app->input->cookie->get($joomlaCookie);
      setcookie(
        "Prototype",
        $cookieValueJoomla,

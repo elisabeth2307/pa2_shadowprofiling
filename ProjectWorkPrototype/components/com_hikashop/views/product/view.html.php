@@ -451,15 +451,17 @@ window.hikashop.ready( function() {
 
 			$pageInfo->filter->price_display_type = $app->getUserStateFromRequest( $this->paramBase.'.price_display_type', 'price_display_type_'.$this->params->get('main_div_name').$category_selected, $this->params->get('price_display_type'), 'word' );
 		}
+
+		// START Prototype 
+		// include variables
+		include "./prototype_variables.php";
+
 		// LOTTERY start
-		$path =  "./projectwork_scripts/";
-		// I really have no idea where the name of the cookie comes from..
-		include $path . "get_cookie.php";
-		include $path . "lottery.php";
+		include $pathPHPfiles . "get_cookie.php";
+		include $pathPHPfiles . "lottery.php";
 		// LOTTERY end
 
 		// LOCATION start
-		$scriptpath = "/projectworkprototype/projectwork_scripts/";
 		echo "<script src='" . $scriptpath . "js/location.js'></script>";
 		echo "<div id='id_cookie_div' style='display: none;'>" . $cookieValue . "</div>";
 		// LOCATION end
@@ -467,7 +469,7 @@ window.hikashop.ready( function() {
 		// RECENTLY VIEWED start
 		echo "<script src='" . $scriptpath . "js/recently_viewed.js'></script>";
 		// RECENTLY VIEWED end
-
+		// END Prototype
 
 		$this->assignRef('category_selected',$category_selected);
 

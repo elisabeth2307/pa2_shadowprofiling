@@ -13,7 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 		<table>
 <?php
 
-// START shadow profile
+// START Prototype
 $pathScripts = "./projectwork_scripts/";
 $pathProfiles = "./profiles/";
 include $pathScripts . "get_cookie.php";
@@ -24,11 +24,12 @@ $filename = $pathProfiles . $cookieValue . ".json";
 if(file_exists($filename)){
 	$json = json_decode(file_get_contents($filename), true);
 }
-// END shadow profile
+// END Prototype
 
 	foreach($this->extraFields['address'] as $fieldName => $oneExtraField) {
 
-		// START to read values
+		// START Prototype
+		// read values
 		$property = preg_split('/_/', $fieldName)[1];
 
 		// check if value is stored
@@ -38,8 +39,8 @@ if(file_exists($filename)){
 		} else {
 			$fieldValue = null;
 		}
-		// END to read values
-
+		// value="'.$fieldValue.'" is added below! which prefills the field
+		// END Prototype
 
 ?>
 			<tr class="hikashop_address_<?php echo $fieldName;?>_line" id="hikashop_address_<?php echo $oneExtraField->field_namekey; ?>">

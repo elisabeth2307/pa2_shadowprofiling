@@ -10,7 +10,7 @@ $email = $_POST["email"];
 // create filename for shadow profile
 $filename = $pathProfiles . $id . ".json";
 
-// create file for case it doesn't exists
+// create file in case it doesn't exists
 $file = fopen($filename, "a");
 fclose($file);
 
