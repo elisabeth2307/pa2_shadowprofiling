@@ -58,3 +58,7 @@
 7. **Deleting of similarities:** As the script mentioned before is executed very often for testing purposes, it is necessary to delete all similarities of all shadow profiles.
 
 8. **Prefilling of checkout fields:** The shadow profile belonging to the device is checked for existing data to be filled in in advance to make the checkout easier and not that time consuming for the customer. See ProjectWorkPrototype/components/com_hikashop/views/address/tmpl/form.php. This is the main goal of the project.
+
+
+## Adapt functionality to other systems
+It is possible to adapt the functionality to other systems but it needs some knowledge. The code from ProjectWorkPrototype/components/com_hikashop/views/address/tmpl/form.php and ProjectWorkPrototype/components/com_hikashop/views/product/view.html.php needs to be inserted into the other system which might not work without changes (especially form.php). But if the file structure of profiles and projectwork_scripts is same, at least the self created scripts should work. Of course all the used paths must be checked if they are valid.
