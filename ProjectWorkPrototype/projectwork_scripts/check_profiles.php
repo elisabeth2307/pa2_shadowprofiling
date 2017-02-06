@@ -34,10 +34,9 @@
         // if email address is equal
         if (!empty($fileContent['email']) && !empty($fileContentTemp['email']) &&
             $fileContent['email'] == $fileContentTemp['email']){
-
-              $returnvalue = addSimilarities($fileContent, $fileContentTemp, $value, $valueInner, '100');
-              $fileContent = $returnvalue['fileContent'];
-              $fileContentTemp = $returnvalue['fileContentTemp'];
+              $probability = '100';
+              $fileContent = setSimilarities($fileContent, $valueInner, $probability);
+              $fileContentTemp = setSimilarities($fileContentTemp, $value, $probability);
               echo "<li> Email address equal </li>";
 
         }
@@ -48,9 +47,8 @@
             $fileContent['firstname'] == $fileContentTemp['firstname'] &&
             $fileContent['lastname'] == $fileContentTemp['lastname']){
 
-              $returnvalue = addSimilarities($fileContent, $fileContentTemp, $value, $valueInner, '20');
-              $fileContent = $returnvalue['fileContent'];
-              $fileContentTemp = $returnvalue['fileContentTemp'];
+              $fileContent = setSimilarities($fileContent, $valueInner, $probabilityNameEqual);
+              $fileContentTemp = setSimilarities($fileContentTemp, $value, $probabilityNameEqual);
               echo "<li> Name equal </li>";
         }
 
@@ -67,9 +65,6 @@
             $productsSimilar = $productCount - count($noDuplicates);
             $probabilityCalculated = round(100 * $productsSimilar / $productCount);
 
-            $returnvalue = addSimilarities($fileContent, $fileContentTemp, $value, $valueInner, $probabilityCalculated);
-            $fileContent = $returnvalue['fileContent'];
-            $fileContentTemp = $returnvalue['fileContentTemp'];
             echo "<li> Similar products </li>";
           }
 
@@ -88,47 +83,27 @@
   echo "<h1> --- All files done! --- </h1>";
 
 
-function addSimilarities($fileContent, $fileContentTemp, $value, $valueInner, $probability){
-
-  // add found profile into current one
-  // if no similarities are stored at all
-  if(empty($fileContent['similarities'])){
-    $fileContent['similarities'][$valueInner]['probability'] = $probability;
-  }
-  // if value is already saved -> change probability
-  else if (!empty($fileContent['similarities'][$valueInner]['probability'])) {
-    $fileContent['similarities'][$valueInner]['probability'] = $fileContent['similarities'][$valueInner]['probability'] + $probability;
-  }
-  // if value itself is not saved but other values are stored
-  else {
-    $fileContent['similarities'] = array_merge($fileContent['similarities'], array($valueInner => array('probability' => $probability)));
-  }
-
-  // if no similarities are stored at all
+function setSimilarities($file, $value, $probability){
   // add found profile into temp one
-  if(empty($fileContentTemp['similarities'])){
-    $fileContentTemp['similarities'][$value]['probability'] = $probability;
+  // if no similarities are stored at all
+  if(empty($file['similarities'])){
+    $file['similarities'][$value]['probability'] = $probability;
   }
   // if value is already saved -> change probability
-  else if (!empty($fileContentTemp['similarities'][$value]['probability'])) {
-    $fileContentTemp['similarities'][$value]['probability'] = $fileContentTemp['similarities'][$value]['probability'] + $probability;
+  else if (!empty($file['similarities'][$value]['probability'])) {
+    $file['similarities'][$value]['probability'] = $file['similarities'][$value]['probability'] + $probability;
   }
   // if value itself is not saved but other values are stored
   else {
-    $fileContentTemp['similarities'] = array_merge($fileContentTemp['similarities'], array($value => array('probability' => $probability)));
+    $file['similarities'] = array_merge($file['similarities'], array($value => array('probability' => $probability)));
   }
 
   // if probability is 100 e.g. email address is same -> set flag that it is confirmed
   if($probability == 100){
-    $fileContent['similarities'][$valueInner]['confirmed'] = 1;
-    $fileContentTemp['similarities'][$value]['confirmed'] = 1;
+    $file['similarities'][$value]['confirmed'] = 1;
   }
 
-  // prepare array for returning values
-  $returnValue['fileContent'] = $fileContent;
-  $returnValue['fileContentTemp'] = $fileContentTemp;
-
-  return $returnValue;
+  return $file;
 }
 
 

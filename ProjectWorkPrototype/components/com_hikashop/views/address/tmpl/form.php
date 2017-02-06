@@ -18,10 +18,87 @@ include "./prototype_variables.php";
 include $pathPHPfiles . "get_cookie.php";
 // cookie value is now available -> $cookieValue
 
+// array where similar profiles are stored temporarily
+$GLOBALS['similarProf'] = [];
+// prepare needed keys -> the values will be filled if similar profiles were found
+$GLOBALS['evalValues'] = array('email' => "", 'firstname' => "", 'lastname' => "", 'street' => "", 'post' => "", 'city' => "", 'country' => "", 'state' => "");
+
 // file handling
 $filename = $pathProfiles . $cookieValue . ".json";
+// check if file of current user exists
 if(file_exists($filename)){
 	$json = json_decode(file_get_contents($filename), true);
+	// retrieve profiles with probability higher than specific percentage
+	$similarProfiles = $json['similarities'];
+
+	// if similarities are available iterate all similarities
+	if(!empty($similarProfiles)){
+		foreach ($similarProfiles as $key => $value) {
+			// if the probability of a profile is higher than the predefined probability
+			// => similarity must be higher than for example 50% to be considered
+			if($value['probability'] > $probabilityPercentageCheckout){
+
+				// prepare filename of similar profile
+				$filenameSimilarProf = $pathProfiles . $key;
+
+				// use probability as key -> higher probability will be prefered later
+				// if the probability is available in the "result"-array, value is set ...
+				if(empty($GLOBALS['similarProf'][$value['probability']])){
+					$GLOBALS['similarProf'][$value['probability']] = $filenameSimilarProf;
+				} else {
+					$i = 1;
+					$done = 0;
+					// ... otherwise the probability is decreased until it can be stored
+					do {
+						if(empty($GLOBALS['similarProf'][$value['probability']-$i])){
+							$GLOBALS['similarProf'][$value['probability']-$i] = $filenameSimilarProf;
+							$done = 1;
+						}
+						$i++;
+					} while($done == 0);
+				}
+
+
+			}
+		}
+	}
+	// call function to gather data from files
+	gatherSimilarProfData();
+}
+
+// retrieve shadow profile content and search for needed data
+function gatherSimilarProfData(){
+	// sort in reverse order -> highest probability is gathered first
+	krsort($GLOBALS['similarProf']);
+
+	foreach ($GLOBALS['similarProf'] as $key => $value) {
+		// key is the probability
+		// value is the filename
+
+		// get current shadow profile
+		$json = json_decode(file_get_contents($value), true);
+
+		// iterate all needed keys
+		foreach ($GLOBALS['evalValues'] as $key => $value) {
+			// if the value of the profileKeys is empty and the similar profile contains a value
+			if(empty($value) && !empty($json[$key])){
+				// set value
+				$GLOBALS['evalValues'][$key] = $json[$key];
+			}
+		}
+	}
+
+}
+
+// returns requested value from one of the similar shadow profiles
+// which was gathered in gatherSimilarProfData in case data is missing
+// at the checkout
+function getSimilarProfData($key){
+	if(!empty($GLOBALS['evalValues'][$key])){
+		return ucfirst($GLOBALS['evalValues'][$key]);
+	} else {
+		return null;
+	}
 }
 // END Prototype
 
@@ -36,9 +113,9 @@ if(file_exists($filename)){
 			$fieldValue = $json[$property];
 			$fieldValue = ucfirst($fieldValue);
 		} else {
-			$fieldValue = null;
+			$fieldValue = getSimilarProfData($property);
 		}
-		// value="'.$fieldValue.'" is added below! which prefills the field
+		// INFO: value="'.$fieldValue.'" is added below! which prefills the field
 		// END Prototype
 
 ?>
