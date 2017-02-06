@@ -13,7 +13,7 @@
 
 4. The system should work now! :-) Since there happen almost always some unexpected failures (or maybe I also have forgotten to mention something), contact the author for help or suggestions for improvement.
 
-5. The **cookie** that is set for shadow profiling depends on the Joomla cookie. If you can access the web shop, take a look at the cookies set. There should be one from Joomla with a random chosen name. In my example it is "5954872f5836ba36117eac10a7c8bd93". Copy the name of this main Joomla cookie and paste the value into the file "./ProjectWorkPrototype/prototype_variables.php" for the key "$joomlaCookie" which is the first variable in that file. If you don't do this, it doesn't work like it should.
+5. The **cookie** that is set for shadow profiling depends on the Joomla cookie. If you can access the web shop, take a look at the cookies set. There should be one from Joomla with a random chosen name. In the example it is "5954872f5836ba36117eac10a7c8bd93". Copy the name of this main Joomla cookie and paste the value into the file "./ProjectWorkPrototype/prototype_variables.php" for the key "$joomlaCookie" which is the first variable in that file. If you don't do this, it doesn't work like it should.
 
 
 **I hope you consider my work as useful and inspiring. As I intimated in README.md, I want to set a sign and to make a difference. Be part of this difference and make the world a better place :-)**

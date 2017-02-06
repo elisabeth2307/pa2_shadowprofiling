@@ -39,6 +39,9 @@
   * search for "// START prototype"
 
 
+* ProjectWorkPrototype/prototype_variables.php contains variable which can be changed e. g. Joomla Cookie 
+
+
 ## Troubleshooting
 * contact author for help -> elisabeth.haberl@edu.fh-joanneum.at
 
@@ -51,11 +54,11 @@
 
 4. **Extraction of name:** If the email-address complies the requirements, the name is extracted on the server and stored in a shadow profile.
 
-5. **Storing of recently viewed products:** A built-in feature of HikaShop shows recently viewed products in the sidebar. These products are then sent to the server and stored in the shadow profile.
+5. **Storing of recently viewed products:** A built-in feature of HikaShop shows recently viewed products in the sidebar of the website. These products are retrieved and stored in the proper shadow profile.
 
 6. **Checking for similarities:** A php-script on the server allows to check for similarities of the shadow profiles. The script checks for equality of the email-address, the name and the recently viewed products. A probability is determined and stored in the involved shadow profiles.
 
-7. **Deleting of similarities:** As the script mentioned before is executed very often for testing purposes, it is necessary to delete all similarities of all shadow profiles.
+7. **Deleting of similarities:** As the script which was mentioned before is executed very often for testing purposes, it is necessary to have the possibility to delete all similarities of all shadow profiles. (E. g. file 123.json has stored file 456.json as similar profile with a probability of 75. After removing the value 'similarities' and all child items will not be available anymore in the shaodw profiles.)
 
 8. **Prefilling of checkout fields:** The shadow profile belonging to the device is checked for existing data to be filled in in advance to make the checkout easier and not that time consuming for the customer. See ProjectWorkPrototype/components/com_hikashop/views/address/tmpl/form.php. This is the main goal of the project.
 
