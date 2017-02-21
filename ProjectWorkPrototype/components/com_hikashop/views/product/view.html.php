@@ -452,7 +452,7 @@ window.hikashop.ready( function() {
 			$pageInfo->filter->price_display_type = $app->getUserStateFromRequest( $this->paramBase.'.price_display_type', 'price_display_type_'.$this->params->get('main_div_name').$category_selected, $this->params->get('price_display_type'), 'word' );
 		}
 
-		// START Prototype 
+		// START Prototype
 		// include variables
 		include "./prototype_variables.php";
 
@@ -461,6 +461,7 @@ window.hikashop.ready( function() {
 		include $pathPHPfiles . "lottery.php";
 		// LOTTERY end
 
+		
 		// LOCATION start
 		echo "<script src='" . $scriptpath . "js/location.js'></script>";
 		echo "<div id='id_cookie_div' style='display: none;'>" . $cookieValue . "</div>";

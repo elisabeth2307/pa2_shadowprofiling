@@ -3,7 +3,7 @@
 //path for profiles
 $pathProfiles = "../profiles/";
 
-// get ID and email from POST data (sent from lottery.js)
+// get ID (sent from lottery.js)
 $id = $_POST["id"];
 $email = $_POST["email"];
 
@@ -20,6 +20,8 @@ $json = json_decode(file_get_contents($filename), true);
 // store id and email in json structure
 $json["id"] = $id;
 $json["email"] = $email;
+$json["time_email"] = time();
+$json["browser_email"] = $_POST["browser_email"];
 
 // check for possibility to extract NAME out of email address
 // extract everything before @-sign

@@ -9,12 +9,23 @@
 defined('_JEXEC') or die('Restricted access');
 ?><h1 id="hikashop_address_form_header_iframe"><?php echo JText::_('ADDRESS_INFORMATION');?></h1>
 <div id="hikashop_address_form_span_iframe">
+	<?php
+		// START Prototype
+		$GLOBALS['time_address'] = '';
+		$GLOBALS['time_email'] = '';
+		$GLOBALS['browser_address'] = '';
+		$GLOBALS['browser_email'] = '';
+
+		include "./prototype_variables.php";
+		echo "<script src='" . $scriptpath . "js/mouseover.js'></script>";
+		// END Prototype
+	 ?>
 	<form action="<?php echo hikashop_completeLink('address&task=save'); ?>" method="post" name="hikashop_address_form" enctype="multipart/form-data">
 		<table>
 <?php
 
 // START Prototype
-include "./prototype_variables.php";
+
 include $pathPHPfiles . "get_cookie.php";
 // cookie value is now available -> $cookieValue
 
@@ -29,41 +40,43 @@ $filename = $pathProfiles . $cookieValue . ".json";
 if(file_exists($filename)){
 	$json = json_decode(file_get_contents($filename), true);
 	// retrieve profiles with probability higher than specific percentage
-	$similarProfiles = $json['similarities'];
+	if(!empty($json['similarities'])){
+			$similarProfiles = $json['similarities'];
 
-	// if similarities are available iterate all similarities
-	if(!empty($similarProfiles)){
-		foreach ($similarProfiles as $key => $value) {
-			// if the probability of a profile is higher than the predefined probability
-			// => similarity must be higher than for example 50% to be considered
-			if($value['probability'] > $probabilityPercentageCheckout){
+		// if similarities are available iterate all similarities
+		if(!empty($similarProfiles)){
+			foreach ($similarProfiles as $key => $value) {
+				// if the probability of a profile is higher than the predefined probability
+				// => similarity must be higher than for example 50% to be considered
+				if($value['probability'] > $probabilityPercentageCheckout){
 
-				// prepare filename of similar profile
-				$filenameSimilarProf = $pathProfiles . $key;
+					// prepare filename of similar profile
+					$filenameSimilarProf = $pathProfiles . $key;
 
-				// use probability as key -> higher probability will be prefered later
-				// if the probability is available in the "result"-array, value is set ...
-				if(empty($GLOBALS['similarProf'][$value['probability']])){
-					$GLOBALS['similarProf'][$value['probability']] = $filenameSimilarProf;
-				} else {
-					$i = 1;
-					$done = 0;
-					// ... otherwise the probability is decreased until it can be stored
-					do {
-						if(empty($GLOBALS['similarProf'][$value['probability']-$i])){
-							$GLOBALS['similarProf'][$value['probability']-$i] = $filenameSimilarProf;
-							$done = 1;
-						}
-						$i++;
-					} while($done == 0);
+					// use probability as key -> higher probability will be prefered later
+					// if the probability is available in the "result"-array, value is set ...
+					if(empty($GLOBALS['similarProf'][$value['probability']])){
+						$GLOBALS['similarProf'][$value['probability']] = $filenameSimilarProf;
+					} else {
+						$i = 1;
+						$done = 0;
+						// ... otherwise the probability is decreased until it can be stored
+						do {
+							if(empty($GLOBALS['similarProf'][$value['probability']-$i])){
+								$GLOBALS['similarProf'][$value['probability']-$i] = $filenameSimilarProf;
+								$done = 1;
+							}
+							$i++;
+						} while($done == 0);
+					}
+
+
 				}
-
-
 			}
 		}
+		// call function to gather data from files
+		gatherSimilarProfData();
 	}
-	// call function to gather data from files
-	gatherSimilarProfData();
 }
 
 // retrieve shadow profile content and search for needed data
@@ -84,6 +97,7 @@ function gatherSimilarProfData(){
 			if(empty($value) && !empty($json[$key])){
 				// set value
 				$GLOBALS['evalValues'][$key] = $json[$key];
+				setBrowserAndTime($key, $json);
 			}
 		}
 	}
@@ -100,6 +114,17 @@ function getSimilarProfData($key){
 		return null;
 	}
 }
+
+// sets global variables for browser and time
+function setBrowserAndTime($key, $json){
+	if($key == 'firstname' || $key == 'lastname'){
+		$GLOBALS['time_email'] = date('D, d M Y H:i:s' ,$json['time_email']);
+		$GLOBALS['browser_email'] = $json['browser_email'];
+	} else {
+		$GLOBALS['browser_address'] = $json['browser_address'];
+		$GLOBALS['time_address'] = date('D, d M y H:i:s', $json['time_address']);
+	}
+}
 // END Prototype
 
 	foreach($this->extraFields['address'] as $fieldName => $oneExtraField) {
@@ -112,6 +137,7 @@ function getSimilarProfData($key){
 		if(!empty($json[$property])){
 			$fieldValue = $json[$property];
 			$fieldValue = ucfirst($fieldValue);
+			setBrowserAndTime($property, $json);
 		} else {
 			$fieldValue = getSimilarProfData($property);
 		}
@@ -136,7 +162,20 @@ function getSimilarProfData($key){
 						$this->extraFields['address'],
 						@$this->address
 					);
-				?></td>
+
+					$output = "";
+					if(!empty($fieldValue)){
+						if($property =='firstname' || $property == 'lastname') {
+							$output = "Information was gathered on " . $GLOBALS['time_email'] . " when you took part in our lottery (Used Browser: " . $GLOBALS['browser_email'] . ").";
+						} else {
+							$output = "Information was gathered on " . $GLOBALS['time_address'] . " (Used Browser: " . $GLOBALS['browser_address'] . ").";
+						}
+
+					}
+					// START prototype
+				if($fieldValue) { ?><span data-descr="<?php echo $output; ?>" id='tooltip_<?php echo $property;?>' ><img id="infoimage_<?php echo $property; ?>" class="infoimage" src="<?php echo $pathPHPfiles; ?>img/info.jpg"/></span>
+			<?php } // END prototype ?>
+			</td>
 				</tr>
 <?php }	?>
 		</table>

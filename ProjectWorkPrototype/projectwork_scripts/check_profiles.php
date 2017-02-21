@@ -65,6 +65,14 @@
             $productsSimilar = $productCount - count($noDuplicates);
             $probabilityCalculated = round(100 * $productsSimilar / $productCount);
 
+            // probability should not be higher than 50 because recenty viewed products
+            // are not very reliable
+            if($probabilityCalculated > 50){
+              $probabilityCalculated = 50;
+            }
+            $fileContent = setSimilarities($fileContent, $valueInner, $probabilityCalculated);
+            $fileContentTemp = setSimilarities($fileContentTemp, $value, $probabilityCalculated);
+
             echo "<li> Similar products </li>";
           }
 

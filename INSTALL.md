@@ -2,7 +2,7 @@
 
 ## File structure
 * ProjectWorkPrototype: contains Joomla files for web server
-* Database: contains SQL-files for importing into database (insert **only one file** -> take most recent one)
+* Database: contains SQL-files for importing into database (insert **only one file** -> take the most recent one)
 
 ## Instructions
 1. Upload the folder "ProjectWorkPrototype" to a **web server** (contains Joomla files) (hint: use XAMPP for local usage). If you use XAMPP, you don't have to copy the folder into "htdocs" but you can create an alias and a link which makes it easier if you work with a repository.

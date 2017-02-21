@@ -6,7 +6,7 @@
 
 **Institution:** FH Joanneum
 
-**Date:** January 2017
+**Date:** Oct 2016 - Feb 2017
 
 ***
 
@@ -14,17 +14,17 @@
 
 ***
 
-**Background:** Shadow profiling got viral in 2012 and 2013 when a Facebook leak revealed data of people, that should not be there (google "Facebook shadow profiling" for more detail). Social networks as well as sophisticated technologies made it easy to gather a lot of data of users sometimes without knowing or without permission.
+**Background:** Shadow profiling got viral in 2012 and 2013 when a Facebook leak revealed data of people, that should not be there (google "Facebook shadow profiling" for more information). Social networks as well as sophisticated technologies make it easy to gather a lot of user data without knowing or without permission.
 
-**Motivation:** I want to make a difference. I want users to learn about possible data collecting techniques that happen unnoticed. And I want developers to think of how to treat users with developing features.
-*Keep in mind:* The possibilities to collect all kind of data are there but that does not mean that they need to be used. And not everything collected must be stored.
+**Motivation:** I want to make a difference. I want users to learn about possible data collecting techniques that happen unnoticed. And I want developers to think of how to treat users correctly with help of developing features.
+*Keep in mind:* The possibilities to collect all kind of data are there but that does not mean that they need to be used. And not every data collected must be stored.
 
 **Prototype:** The prototype is an example of how user data can be collected and stored but only for the advantage of the user. Also the possibility for the user to inform oneself about the data collected and stored is new but might increase in importance. Joomla CMS and HikaShop Joomla-extension are used for ease of use.
 
 ## File structure and important files
 * ProjectWorkPrototype: contains Joomla files for web server
 
-* Database: contains SQL-files for importing into database (insert **only one file** -> take most recent one)
+* Database: contains SQL-files for importing into database (insert **only one file** -> take the most recent one)
 
 * ProjectWorkPrototype/projectwork_scripts: contains all files created by the author which contain the main logic of the prototype
 
@@ -39,7 +39,7 @@
   * search for "// START prototype"
 
 
-* ProjectWorkPrototype/prototype_variables.php contains variable which can be changed e. g. Joomla Cookie 
+* ProjectWorkPrototype/prototype_variables.php contains variable which can be changed e. g. Joomla Cookie
 
 
 ## Troubleshooting
@@ -65,3 +65,6 @@
 
 ## Adapt functionality to other systems
 It is possible to adapt the functionality to other systems but it needs some knowledge. The code from ProjectWorkPrototype/components/com_hikashop/views/address/tmpl/form.php and ProjectWorkPrototype/components/com_hikashop/views/product/view.html.php needs to be inserted into the other system which might not work without changes (especially form.php). But if the file structure of profiles and projectwork_scripts is same, at least the self created scripts should work. Of course all the used paths must be checked if they are valid.
+
+### CSS adaptions
+If you want to modify the layout, make your changes in "ProjectWorkPrototype/templates/protostar/css/template.css" which is the stylesheet of the used template. If you want to use another template, you have to use another stylesheet of course.

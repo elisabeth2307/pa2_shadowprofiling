@@ -6,7 +6,7 @@
   echo "<script src='" . $scriptpath . "js/lottery.js'></script>";
 
   // create lottery form in div
-  echo "<div id='lottery'>";
+  echo "<div id='lottery' class='lottery'>";
   // headline
   echo "<hr><h3>Win a -10% voucher!</h3>";
   // description

@@ -1,3 +1,31 @@
+span[data-descr] {
+  position: relative;
+  text-decoration: underline;
+  color: #00F;
+  cursor: help;
+}
+
+span[data-descr]:hover::before {
+  content: attr(data-descr);
+  position: absolute;
+  left: -100px;
+  top: 24px;
+  min-width: 200px;
+  border: 1px #aaaaaa solid;
+  border-radius: 10px;
+  background-color: #ffffcc;
+  padding: 12px;
+  color: #000000;
+  font-size: 14px;
+  z-index: 1;
+}
+[id^="info"]{
+	width: 15px;
+	height: auto;
+}
+#aside .hikashop_module {
+  display: none;
+}
 article,
 aside,
 details,
